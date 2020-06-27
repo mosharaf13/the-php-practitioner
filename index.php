@@ -1,8 +1,7 @@
 <?php
 
-$database = require 'bootstrap.php';
-
-$users = $database->selectAll('users');
+require 'core/bootstrap.php';
 
 
-require 'index.view.php';
+require Router::load('routes.php')
+    ->direct(Request::uri(), Request::method());
