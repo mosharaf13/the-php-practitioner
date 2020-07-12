@@ -1,7 +1,11 @@
 <?php
 
 
-var_dump($_POST);
 $users = $app['database']->selectAll('users');
 
-require 'views/names.view.php';
+$app['database']->insert('users', [
+    'name' => $_POST['name']
+]);
+
+
+header('Location: /');
