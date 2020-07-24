@@ -36,9 +36,22 @@ class Router{
     {
 
         if(array_key_exists($uri, $this->routes[$requestType])){
-            return $this->routes[$requestType][$uri];
+            return $this->callAction(...explode('@', $this->routes[$requestType][$uri]));
         }
 
         throw new Exception('No route defined for this uri');
+    }
+
+    protected function callAction($controller, $action)
+    {
+        $controller = new $controller;
+
+        if(! method_exists($controller, $action)){
+            throw new Exception(
+                "{$controller} doesn't respond to the {$action} action."
+            );
+        }
+
+        return $controller->$action();
     }
 }
